@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Приветствие от бота</title>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Укажите user_id, который вы хотите вывести
+            const user_id = 12345; // Замените на реальный user_id, который был добавлен в базу данных
+
+            fetch(`http://127.0.0.1:5000/get_user_data/${user_id}`)  // Запрос к вашему API
+                .then(response => response.json())
+                .then(data => {
+                    if (data.username) {
+                        const greeting = `Привет, ${data.username}!`;
+                        const userElement = document.createElement('p');
+                        userElement.textContent = greeting;
+                        document.body.appendChild(userElement);  // Выводим на страницу
+                    } else {
+                        const errorElement = document.createElement('p');
+                        errorElement.textContent = "Пользователь не найден.";
+                        document.body.appendChild(errorElement);  // Сообщение об ошибке
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+        });
+    </script>
+</head>
+<body>
+    <h1>Добро пожаловать на сайт Sbewo!</h1>
+    <p>Здесь будет отображаться приветствие для каждого пользователя.</p>
+</body>
+</html>
